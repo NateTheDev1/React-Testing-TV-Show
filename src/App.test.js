@@ -705,7 +705,7 @@ const data = {
 };
 
 describe("App", () => {
-  test("renders properly", () => {
+  it("renders properly", () => {
     //Renders Properly
     mockFetchShow.mockResolvedValueOnce(data);
     const app = render(<App />);
@@ -713,7 +713,7 @@ describe("App", () => {
     expect(app.getByText("Fetching data...")).toBeVisible();
   });
 
-  test("App fetches data and renders properly", async () => {
+  it("App fetches data and renders properly", async () => {
     // Tests data fetch on 2 different seasons
     mockFetchShow.mockResolvedValueOnce(data);
     const { getByText, getAllByText } = await render(<App />);
