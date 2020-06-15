@@ -1,6 +1,9 @@
 import React from "react";
 import { render, fireEvent, wait } from "@testing-library/react";
 import Episodes from "./Episodes";
+import { fetchShow as mockFetchShow } from "../api/fetchShow";
+
+jest.mock("../api/fetchShow");
 
 describe("The Episode Component", () => {
   const episodeData = [
@@ -175,12 +178,14 @@ describe("The Episode Component", () => {
   ];
 
   it("renders properly", () => {
-    const episodes = render(<Episodes episodes={episodeData} />);
+    const episodes = render(<Episodes episodes={[]} />);
     expect(episodes).toBeTruthy();
   });
 
-  it("renders movies correctly", () => {
-    const episodes = render(<Episodes episodes={episodeData} />);
-    expect(episodes.getAllByText(/episode/i)).toHaveLength(8);
+  test("renders movies correctly with default data", () => {
+    const { queryAllByTestId, rerender } = render(<Episodes episodes={[]} />);
+    expect(queryAllByTestId("episode")).toHaveLength(0);
+    rerender(<Episodes episodes={episodeData} />);
+    expect(queryAllByTestId("episode")).toHaveLength(episodeData.length);
   });
 });
